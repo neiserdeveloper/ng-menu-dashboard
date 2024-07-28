@@ -22,7 +22,16 @@ export default class LoginComponent {
 
   login(): void {
     this.authService.login(this.user, this.password).subscribe({
-      next: ()=> this.router.navigate(['/dashboard']),
+      next: (response)=> {
+        const token = response.token;
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const role = payload.role;
+        if(role === 'admin') {
+          this.router.navigate(['/dashboard'])
+        }else {
+          this.router.navigate(['/profile'])
+        }
+      },
       error: (err) => console.error('Login failed', err)
     })
   }
