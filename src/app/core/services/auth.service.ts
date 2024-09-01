@@ -2,15 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private LOGIN_URL = 'http://localhost:3000/api/v1/auth/login';
+  private LOGIN_URL = `${environment.apiUrl}${environment.auth.loginUrl}`;
   private tokenKey = 'authToken';
 
-  private REFRESH_URL = 'http://localhost:3000/api/v1/auth/refresh';
+  private REFRESH_URL = `${environment.apiUrl}${environment.auth.refreshUrl}`;
   private refreshTokenKey = 'refreshToken';
 
   constructor(private httpClient: HttpClient, private router: Router) { }
